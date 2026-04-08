@@ -1,4 +1,4 @@
-FROM node:18-bullseye
+FROM node:22-bullseye
 
 RUN apt-get update && apt-get install -y \
     chromium \
@@ -10,9 +10,8 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --legacy-peer-deps
 COPY . .
+RUN npm install --legacy-peer-deps --ignore-scripts
 RUN npm run build
 
 EXPOSE 21465
